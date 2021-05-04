@@ -1,0 +1,43 @@
+<detalle-producto *ngIf="productoSeleccionado" [producto]="productoSeleccionado"></detalle-producto>
+
+<div class="card" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title">Listado de Productos</h5>
+
+    <div class="my-2 text-left">
+      <button class="btn btn-rounded btn-primary" [routerLink]="['/productos/form']" type="button" >Crear Producto</button>
+    </div>
+
+    <div class="alert alert-indo" *ngIf="productos?.length == 0">
+      No hay registros en la base de datos
+    </div>
+
+    <table class="table table-bordered table-striped" *ngIf="productos?.length>0">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>marca</th>
+          <th>modelo</th>
+          <th>fecha de produccion</th>
+          <th>Editar</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td><button (click)="abrirModal(producto)"  class="btn btn-success" type="button">{{ producto.id }}</button></td>
+          <td>{{ producto.marca }}</td>
+          <td>{{ producto.modelo }}</td>
+          <td>{{ producto.fecha_de_produccion }}</td>
+          <td>
+            <button type="button" name="editar" [routerLink]="['/productos/form', producto.id]" class="btn btn-primary"> Editar </button>
+          </td>
+          <td>
+            <button type="button" name="eliminar" (click)='delete(producto)' class="btn btn-primary"> Borrar </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav-paginator *ngIf="paginador" [paginador] = "paginador"></nav-paginator>
+  </div>
+</div>
