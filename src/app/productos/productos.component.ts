@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { ModalService } from './detalle/modal.service';
+import { AuthUsuarioService } from './usuarios/auth-usuario.service';
 
 @Component({
   selector: 'app-productos',
@@ -18,6 +19,7 @@ export class ProductosComponent implements OnInit {
 
   constructor(private productoService: ProductoService,
       private activatedRoute: ActivatedRoute,
+      public authService: AuthUsuarioService,
       private modalService: ModalService) { }
 
   ngOnInit() {
