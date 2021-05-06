@@ -30,12 +30,46 @@
                 <div class="progress-bar" role="progressbar" [ngStyle]="{width: progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">{{progreso}}%</div>
               </div>
 
-            </div>
-
+          </div>
             <div class="col-sm">
               <img *ngIf="producto?.foto" src="http://localhost:8098/api/uploads/img/{{producto.foto}}" alt="{{producto.modelo}}" class="img-thumbnail">
             </div>
+          </div>
 
+          <br> <!--CREAR FACTURA-->
+          <div class="row">
+            <td><button class="btn btn-success btn-sm" [routerLink]="['/facturas/form', producto.id]" type="button" name="button">Crear Factura</button></td>
+          </div>
+
+          <div class="row">
+            <div class="alert alert-info my-4" *ngIf="producto.facturas.length==0">
+              No hay facturas asignadas para el vehículo {{producto.marca}} {{producto.modelo}}
+            </div>
+            <table class="table table-bordered table-stripped my-4"
+            *ngIf="producto.facturas.length>0">
+              <thead>
+                <tr>
+                  <th>Folio</th>
+                  <th>Descripcion</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Detalle</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let factura of producto.facturas">
+                  <td>{{factura.id}}</td>
+                  <td>{{factura.descripcion}}</td>
+                  <td>{{factura.createAt}}</td>
+                  <td>{{factura.total}}</td>
+                  <td><button class="btn btn-primary btn-sm" type="button"
+                    name="button" [routerLink]="['/facturas', factura.id]">Ver Factura</button></td>
+                  <td><button class="btn btn-danger btn-sm" type="button" name="button" (click)="delete(factura)">Eliminar</button></td>
+                </tr>
+              </tbody>
+
+            </table>
           </div>
         </div>
 
@@ -47,41 +81,3 @@
   </div>
 </div>
 </div>
-
-
-<!-->
-<div class="card bg-dark text-white">
-  <div class="card-header"> {{ titulo }} </div>
-  <div class="card-body">
-
-  <div class="container">
-    <div class="row">
-
-      <div class="col-sm">
-        <ul class="list-group text-dark mb-3" *ngIf="producto">
-          <li class="list-group-item active">{{producto.marca}}</li>
-          <li class="list-group-item">{{producto.modelo}}</li>
-          <li class="list-group-item">{{producto.fecha_de_produccion}}</li>
-        </ul>
-
-        <div class="input-group">
-          <input (change)="seleccionarFoto($event)" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Seleccionar foto">
-          <button (click)="subirFoto()" class="btn btn-outline-secondary"  type="button" id="inputGroupFileAddon04">Subir foto</button>
-        </div>
-
-      <!-- Progress bar
-        <div class="progress" *ngIf="progreso > 0">
-          <div class="progress-bar" role="progressbar" [ngStyle]="{width: progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">{{progreso}}%</div>
-        </div>
-
-      </div>
-
-      <div class="col-sm">
-        <img *ngIf="producto?.foto" src="http://localhost:8098/api/uploads/img/{{producto.foto}}" alt="{{producto.modelo}}" class="img-thumbnail">
-      </div>
-
-    </div>
-  </div>
-
-  </div>
--->

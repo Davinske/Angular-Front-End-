@@ -2,10 +2,11 @@
 
 <div class="card" style="width: 100%;">
   <div class="card-body">
-    <h5 class="card-title">Listado de Productos</h5>
+    <h5 class="card-title">Listado de Vehículos</h5>
 
     <div class="my-2 text-left">
-      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" [routerLink]="['/productos/form']" type="button" >Crear Producto</button>
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" [routerLink]="['/productos/form']"
+      type="button" >Crear Producto</button>
     </div>
 
     <div class="alert alert-indo" *ngIf="productos?.length == 0">
@@ -16,10 +17,11 @@
       <thead>
         <tr>
           <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
-          <th>id</th>
-          <th>marca</th>
-          <th>modelo</th>
-          <th>fecha de produccion</th>
+          <th>ID</th>
+          <th>MARCA</th>
+          <th>MODELO</th>
+          <th>FECHA DE PRODUCCIÓN</th>
+          <th>CREAR FACTURA</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
         </tr>
@@ -30,6 +32,7 @@
           <td>{{ producto.marca }}</td>
           <td>{{ producto.modelo }}</td>
           <td>{{ producto.fecha_de_produccion }}</td>
+          <td><button class="btn btn-success btn-sm" [routerLink]="['/productos/form', producto.id]" type="button" name="button">Crear Factura</button></td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="editar" [routerLink]="['/productos/form', producto.id]" class="btn btn-primary"> Editar </button>
           </td>

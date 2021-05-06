@@ -10,7 +10,7 @@ import { ProductoService} from './productos/producto.service';
 import { RouterModule, Routes} from '@angular/router';
 import { FormComponent } from './productos/form.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
@@ -20,6 +20,12 @@ import { LoginComponent } from './productos/usuarios/login.component';
 import { AuthGuard } from './usuarios/guards/auth.guard';
 import { RoleGuard } from './usuarios/guards/role.guard';
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { DetalleFacturaComponent } from './facturas/detalle-factura.component';
+import { FacturasComponent } from './facturas/facturas.component';
+
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 registerLocaleData(localeES, 'es');
 
@@ -31,7 +37,10 @@ const routes: Routes = [
   {path: 'productos/form', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} },
   {path: 'productos/form/:id', component:FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'productos/page/:page', component: ProductosComponent },
-  {path: 'login', component: LoginComponent }
+  {path: 'login', component: LoginComponent },
+  {path: 'facturas/:id', component: DetalleFacturaComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_USER'} },
+  {path: 'facturas/form/:productoId', component: FacturasComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'} }
+
 ]
 
 @NgModule({
@@ -44,14 +53,18 @@ const routes: Routes = [
     FormComponent,
     PaginatorComponent,
     DetalleComponent,
-    LoginComponent
+    LoginComponent,
+    DetalleFacturaComponent,
+    FacturasComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule
+
   ],
   providers: [ProductoService,
   {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],

@@ -1,4 +1,4 @@
-<div class="card border-primary text-center">
+<div class="card border-primary text-center" *ngIf="['/login']">
   <div class="card-header">{{titulo}}</div>
   <div class="card-body">
 
@@ -7,12 +7,16 @@
         <input type="text" [(ngModel)]="usuario.username" class="form-control"
         placeholder="Nombre de usuario" name="username" id="username" autofocus required>
       </div>
+
       <br>
+
       <div class="form-group col-sm-6">
         <input type="password" [(ngModel)]="usuario.password" class="form-control"
         placeholder="Contraseña" name="password" id="password" required>
       </div>
+
       <br>
+
       <div class="form-group col-sm-6">
         <input type="submit" (click)='login()' class="btn btn-lg btn-primary btn-block" value="Login">
       </div>

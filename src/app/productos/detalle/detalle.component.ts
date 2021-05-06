@@ -4,6 +4,8 @@ import { ProductoService } from '../producto.service';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from './modal.service';
+import { FacturasService} from '../../facturas/services/facturas.service';
+import { Factura } from '../../facturas/models/factura';
 
 @Component({
   selector: 'detalle-producto',
@@ -18,17 +20,10 @@ export class DetalleComponent implements OnInit {
   progreso: number = 0;
 
   constructor(private productoService: ProductoService,
-     public modalService: ModalService) { }
+     public modalService: ModalService,
+     private facturassService: FacturasService) { }
 
   ngOnInit() {
-    /*this.activatedRoute.paramMap.subscribe(params => {
-      let id:number = +params.get('id');
-      if(id){
-        this.productoService.getProducto(id).subscribe(producto => {
-          this.producto = producto;
-        });
-      }
-    });*/
   }
 
   seleccionarFoto(event){
@@ -63,5 +58,32 @@ export class DetalleComponent implements OnInit {
       this.fotoSeleccionada = null;
       this.progreso = 0;
     }
+
+
+    delete(factura:Factura): void{
+      swal.fire({
+          title: "¿Está seguro?",
+          text: `Seguro que desea eliminar la factura ${factura.id} :${factura.descripcion}?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí, borrar"
+        })
+        .then(result => {
+          if (result.value) {
+            this.facturassService.delete(factura.id).subscribe(response => {
+              this.producto.facturas = this.producto.facturas.filter(fac => fac !== factura);
+              swal.fire(
+                "Eliminado!",
+                `La factura ${factura.descripcion} se ha eliminado con éxito`,
+                "success"
+              );
+            });
+          }
+        });
+    }
+
+    
 
 }

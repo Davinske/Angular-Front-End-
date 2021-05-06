@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Usuario } from './usuario';
 import swal from 'sweetalert2';
 import { AuthUsuarioService } from './auth-usuario.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,10 @@ export class LoginComponent implements OnInit {
   titulo: string = 'Por favor, sign in';
   usuario: Usuario;
 
-  constructor(private authService: AuthUsuarioService, private router: Router) { }
+  constructor(
+    private authService: AuthUsuarioService,
+    private router: Router) {
+    this.usuario = new Usuario(); }
 
   ngOnInit(){
     if (this.authService.isAuthenticated()){
@@ -36,12 +40,11 @@ export class LoginComponent implements OnInit {
 
       let usuario = this.authService.usuario;
       this.router.navigate(['/productos']);
-      swal.fire('Login', `Hola ${usuario.username}, has iniciado sesion correctamente`, 'success');
+      swal.fire('Login', `Hola ${this.usuario.username}, has iniciado sesion correctamente`, 'success');
     }, err => {
       if (err.status == 400){
         swal.fire('Error Login', 'Usuario o clave incorrecta!', 'error');
       }
     });
   }
-
 }

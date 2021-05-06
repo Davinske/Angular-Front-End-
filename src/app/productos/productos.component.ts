@@ -18,7 +18,7 @@ export class ProductosComponent implements OnInit {
   productoSeleccionado: Producto;
 
   constructor(private productoService: ProductoService,
-      private activatedRoute: ActivatedRoute,
+      public activatedRoute: ActivatedRoute,
       public authService: AuthUsuarioService,
       private modalService: ModalService) { }
 
